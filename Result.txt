@@ -1,0 +1,19 @@
+$wa = Get-SPWebApplication http://sc8-sp16web-dev
+
+$acc = 'mgc\sharepointadmin' 
+
+$arguments = New-Object Microsoft.SharePoint.Administration.SPWebApplication+SPMigrateUserParameters 
+
+$arguments.AddDatabaseToMigrate($wa.ContentDatabases[0]) 
+
+$wa.MigrateUsersToClaims($acc, $true, $arguments)
+
+
+Previously we are putting 1 
+$arguments.AddDatabaseToMigrate($wa.ContentDatabases[1]) 
+We change it to 0 because we have only one database that is "WSS_Content_IntranetProd " so list start with 0
+
+Then we set the internal url to http after running the command 
+
+Set-SPWOPIZone -zone "internal-http"
+To check wheather it applied or not Get-SPWOPIZone
